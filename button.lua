@@ -29,15 +29,15 @@ function Button:update(dt)
 	self.mouseOver = mouseX > self.x and mouseX < self.x + self.w and mouseY > self.y and mouseY < self.y + self.h
 
 	if self.mouseOver then
-		self.alpha = self.alpha + 255 * 9 * dt
+		self.alpha = self.alpha + 1 * 9 * dt
 	else
-		self.alpha = self.alpha - 255 * 9 * dt
+		self.alpha = self.alpha - 1 * 9 * dt
 	end
 
 	if self.alpha < 0 then
 		self.alpha = 0
-	elseif self.alpha > 255 then
-		self.alpha = 255
+	elseif self.alpha > 1 then
+		self.alpha = 1
 	end
 
 	-- button has been pressed

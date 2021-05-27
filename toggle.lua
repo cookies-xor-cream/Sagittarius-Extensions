@@ -48,15 +48,15 @@ function Toggle:update(dt)
 	end
 
 	if self.mouseOver then
-		self.alpha = self.alpha + 255 * 8 * dt
+		self.alpha = self.alpha + 1 * 8 * dt
 	else
-		self.alpha = self.alpha - 255 * 8 * dt
+		self.alpha = self.alpha - 1 * 8 * dt
 	end
 
 	if self.alpha < 0 then
 		self.alpha = 0
-	elseif self.alpha > 255 then
-		self.alpha = 255
+	elseif self.alpha > 1 then
+		self.alpha = 1
 	end
 end
 

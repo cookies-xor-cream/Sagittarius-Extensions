@@ -19,7 +19,7 @@ function normalizeAngle(a)
 end
 
 function setColor(id, t, alpha)
-    local a = 255
+    local a = 1
     if alpha then a = alpha end
     if t == 1 then
         if id == 0 then
@@ -99,7 +99,7 @@ local r, g, b, a = love.graphics.getColor()
    
    local corner = 1
    local function mystencil()
-      love.graphics.setColor(255, 255, 255, 255)
+      love.graphics.setColor(1, 1, 1, 1)
       if corner == 1 then
          love.graphics.rectangle("fill", x-l, y-l, rd+l, rd+l)
       elseif corner == 2 then
@@ -114,30 +114,32 @@ local r, g, b, a = love.graphics.getColor()
       end
    end
    
-   love.graphics.setStencil(mystencil)
+   love.graphics.setCanvas{canvas, stencil=true}
+
+   print(r,g,b,a)
+   -- r,g,b,a = 0.5,0.5,0.5,1
+
+   love.graphics.stencil(mystencil, 'replace', 1)
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+rd, y+rd, rd, s)
-   love.graphics.setStencil()
+
    corner = 2
-   love.graphics.setStencil(mystencil)
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+w-rd, y+rd, rd, s)
-   love.graphics.setStencil()
+
    corner = 3
-   love.graphics.setStencil(mystencil)
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+rd, y+h-rd, rd, s)
-   love.graphics.setStencil()
+
    corner = 4
-   love.graphics.setStencil(mystencil)
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+w-rd, y+h-rd, rd, s)
-   love.graphics.setStencil()
+
    corner = 0
-   love.graphics.setStencil(mystencil)
    love.graphics.setColor(r, g, b, a)
    love.graphics.rectangle(mode, x, y, w, h)
-   love.graphics.setStencil()
+
+   -- maybe clear stencils after each corner?
 end
 
 function shuffleTable( t )

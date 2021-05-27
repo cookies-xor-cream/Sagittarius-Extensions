@@ -198,11 +198,11 @@ end
 function Control:update(dt)
     -- current state
     for key, value in pairs(self.states.mouseDown) do
-        self.states.mouseDown[key] = love.mouse.isDown(key)
+        self.states.mouseDown[key] = love.mouse:isDown(key)
     end
 
     for key, value in pairs(self.states.keyDown) do
-        self.states.keyDown[key] = love.keyboard.isDown(key)
+        self.states.keyDown[key] = love.keyboard:isDown(key)
     end
 
 

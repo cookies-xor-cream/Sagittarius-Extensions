@@ -90,7 +90,7 @@ function love.load()
     love.audio.setVolume(0.8)
 
     -- load music
-    track1 = love.audio.newSource('music/artblock.ogg')
+    track1 = love.audio.newSource('music/artblock.ogg', 'static')
     track1:setLooping(true)
     track1:setVolume(0.3)
     track1:play()
@@ -108,46 +108,46 @@ function love.load()
     --detail:
     --s=35
     --v=74
-    whiteColor = {r=220, g=220, b=230}
-    white2Color = {r=230, g=230, b=240}
+    whiteColor = {r= 0.86, g= 0.86, b= 0.90}
+    white2Color = {r= 0.90, g= 0.90, b= 0.94}
 
-    blackColor = {r=25, g=25, b=33}
+    blackColor = {r= 0.10, g= 0.10, b= 0.13}
 
-    redColor = {r=250, g=75, b=81} --h=358
-    red2Color = {r=232, g=151, b=154}
-    red3Color = {r=219, g=142, b=145}
+    redColor = {r= 0.98, g= 0.29, b= 0.32} --h= 1.40
+    red2Color = {r= 0.91, g= 0.59, b= 0.60}
+    red3Color = {r= 0.86, g= 0.56, b= 0.57}
 
-    orangeColor = {r=250, g=135, b=75} --h=21
-    orange2Color = {r=232, g=179, b=151}
-    orange3Color = {r=219, g=169, b=142}
+    orangeColor = {r= 0.98, g= 0.53, b= 0.29} --h= 0.08
+    orange2Color = {r= 0.91, g= 0.70, b= 0.59}
+    orange3Color = {r= 0.86, g= 0.66, b= 0.56}
 
-    --yellowColor = {r=232, g=250, b=75} --h=66
-    yellow2Color = {r=224, g=232, b=151}
-    yellow3Color = {r=211, g=219, b=142}
+    --yellowColor = {r= 0.91, g= 0.98, b= 0.29} --h= 0.26
+    yellow2Color = {r= 0.88, g= 0.91, b= 0.59}
+    yellow3Color = {r= 0.83, g= 0.86, b= 0.56}
 
-    greenColor = {r=75, g=250, b=92} --114
-    green2Color = {r=159, g=232, b=151}
-    green3Color = {r=150, g=219, b=142}
+    greenColor = {r= 0.29, g= 0.98, b= 0.36} --114
+    green2Color = {r= 0.62, g= 0.91, b= 0.59}
+    green3Color = {r= 0.59, g= 0.86, b= 0.56}
 
-    --turquoiseColor = {r=75, g=250, b=178} --h=156
-    turquoise2Color = {r=151, g=232, b=199}
-    turquoise3Color = {r=142, g=219, b=188}
+    --turquoiseColor = {r= 0.29, g= 0.98, b= 0.70} --h= 0.61
+    turquoise2Color = {r= 0.59, g= 0.91, b= 0.78}
+    turquoise3Color = {r= 0.56, g= 0.86, b= 0.74}
 
-    --cyanColor = {r=75, g=250, b=235} --h=181
-    cyan2Color = {r=151, g=230, b=232}
-    cyan3Color = {r=142, g=218, b=219}
+    --cyanColor = {r= 0.29, g= 0.98, b= 0.92} --h= 0.71
+    cyan2Color = {r= 0.59, g= 0.90, b= 0.91}
+    cyan3Color = {r= 0.56, g= 0.85, b= 0.86}
 
-    blueColor = {r=75, g=109, b=250} --h=228
-    blue2Color = {r=151, g=167, b=232}
-    blue3Color = {r=142, g=157, b=219}
+    blueColor = {r= 0.29, g= 0.43, b= 0.98} --h= 0.89
+    blue2Color = {r= 0.59, g= 0.65, b= 0.91}
+    blue3Color = {r= 0.56, g= 0.62, b= 0.86}
 
-    --purpleColor = {r=150, g=75, b=250} --h=262
-    purple2Color = {r=181, g=151, b=232}
-    purple3Color = {r=170, g=142, b=219}
+    --purpleColor = {r= 0.59, g= 0.29, b= 0.98} --h= 1.03
+    purple2Color = {r= 0.71, g= 0.59, b= 0.91}
+    purple3Color = {r= 0.67, g= 0.56, b= 0.86}
 
-    pinkColor = {r=250, g=75, b=188} --h=321
-    pink2Color = {r=232, g=151, b=203}
-    pink3Color = {r=210, g=142, b=192}
+    pinkColor = {r= 0.98, g= 0.29, b= 0.74} --h= 1.26
+    pink2Color = {r= 0.91, g= 0.59, b= 0.80}
+    pink3Color = {r= 0.82, g= 0.56, b= 0.75}
 
 
     control = Control:new()
@@ -200,9 +200,9 @@ function love.draw()
 
     love.graphics.setCanvas()
     love.graphics.pop()
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.draw(canvas, windowOffsetX, windowOffsetY, 0, windowScale, windowScale)
-    canvas:clear()
+    -- canvas:clear()
 
     -- draw letterboxes
     love.graphics.setColor(0, 0, 0)
