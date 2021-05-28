@@ -113,11 +113,6 @@ local r, g, b, a = love.graphics.getColor()
          love.graphics.rectangle("fill", x-l, y+rd, w+2*l, h-2*rd+l)
       end
    end
-   
-   love.graphics.setCanvas{canvas, stencil=true}
-
-   print(r,g,b,a)
-   -- r,g,b,a = 0.5,0.5,0.5,1
 
    love.graphics.stencil(mystencil, 'replace', 1, false)
    corner = 1
