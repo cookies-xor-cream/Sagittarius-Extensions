@@ -10,6 +10,8 @@ function Control:initialize()
     self.states.mousePressed = {l = false, r = false}
     self.states.mouseReleased = {l = false, r = false}
 
+    self.mouseMap = {l = 1, r = 2} -- converts l and r into mouse button ids
+
     self.states.keyDown = {
                     a = false, 
                     b = false,
@@ -198,7 +200,7 @@ end
 function Control:update(dt)
     -- current state
     for key, value in pairs(self.states.mouseDown) do
-        self.states.mouseDown[key] = love.mouse:isDown(key)
+        self.states.mouseDown[key] = love.mouse.isDown(self.mouseMap[key])
     end
 
     for key, value in pairs(self.states.keyDown) do
