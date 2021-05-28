@@ -49,7 +49,7 @@ function Control:initialize()
                     ['7'] = false,
                     ['8'] = false,
                     ['9'] = false,
-                    [' '] = false,
+                    ['space'] = false,
                     up = false,
                     down = false,
                     left = false,
@@ -95,7 +95,7 @@ function Control:initialize()
                     ['7'] = false,
                     ['8'] = false,
                     ['9'] = false,
-                    [' '] = false,
+                    ['space'] = false,
                     up = false,
                     down = false,
                     left = false,
@@ -141,7 +141,7 @@ function Control:initialize()
                     ['7'] = false,
                     ['8'] = false,
                     ['9'] = false,
-                    [' '] = false,
+                    ['space'] = false,
                     up = false,
                     down = false,
                     left = false,
@@ -187,7 +187,7 @@ function Control:initialize()
                     ['7'] = false,
                     ['8'] = false,
                     ['9'] = false,
-                    [' '] = false,
+                    ['space'] = false,
                     up = false,
                     down = false,
                     left = false,
@@ -204,7 +204,7 @@ function Control:update(dt)
     end
 
     for key, value in pairs(self.states.keyDown) do
-        self.states.keyDown[key] = love.keyboard:isDown(key)
+        self.states.keyDown[key] = love.keyboard.isDown(key)
     end
 
 
