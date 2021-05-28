@@ -48,6 +48,29 @@ function Menu:update(dt)
     self.optionsButton:update(dt)
     self.creditsButton:update(dt)
 
+    gamepadDirection = control:keypadPressed()
+    for k, v in pairs(gamepadDirection) do
+        -- print(k, v)
+    end
+
+    if gamepadDirection['up'] then
+        self.selectedButton = self.selectedButton - 1
+        -- print(self.selectedButton)
+    end
+
+    if gamepadDirection['down'] then
+        self.selectedButton = self.selectedButton + 1
+        -- print(self.selectedButton)
+    end
+
+    if control:triggerPressed() then
+        self.buttons[self.selectedButton]:onPress()
+    end
+
+    if control:backPressed() then
+        love.event.quit()
+    end
+
     if control:keyPressed('escape') and not love.window.getFullscreen() then
         love.event.quit()
     end
