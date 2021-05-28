@@ -34,7 +34,7 @@ function Menu:enteredState()
     self.titleColorId = 1
 
     self.selectedButton = 1
-    self.buttons = {
+    self.menuButtons = {
         self.playButton,
         self.optionsButton,
         self.creditsButton,
@@ -55,16 +55,20 @@ function Menu:update(dt)
 
     if gamepadDirection['up'] then
         self.selectedButton = self.selectedButton - 1
-        -- print(self.selectedButton)
     end
 
     if gamepadDirection['down'] then
         self.selectedButton = self.selectedButton + 1
-        -- print(self.selectedButton)
     end
 
+    -- modular arithmetic sucks in 1-indexed languages: implements wraparound for menu
+    self.selectedButton = (self.selectedButton + #self.menuButtons - 1) % #self.menuButtons + 1
+
+    -- self.selectionButton %= num buttons
+    -- if it's 0 then += 1
+
     if control:triggerPressed() then
-        self.buttons[self.selectedButton]:onPress()
+        self.menuButtons[self.selectedButton]:onPress()
     end
 
     if control:backPressed() then
@@ -119,6 +123,10 @@ function Credits:update(dt)
     self.georgeButton:update(dt)
     self.janButton:update(dt)
 
+    if control:backPressed() then
+        self.menuButton:onPress()
+    end
+
     if control:keyPressed('escape') and love.window.getFullscreen() then
         love.window.setMode(1120, 840, {fullscreen=false, resizable=true, minwidth=560, minheight=420})
     end
@@ -171,6 +179,10 @@ function Options:update(dt)
     self.tutorialToggle:update(dt)
     self.volumeToggle:update(dt)
     self.musicToggle:update(dt)
+
+    if control:backPressed() then
+        self.menuButton:onPress()
+    end
 
     if control:keyPressed('escape') and love.window.getFullscreen() then
         love.window.setMode(1120, 840, {fullscreen=false, resizable=true, minwidth=560, minheight=420})
@@ -236,6 +248,10 @@ end
 function Setup:update(dt)
     self.playerToggles:update(dt)
     self.menuButton:update(dt)
+
+    if control:backPressed() then
+        self.menuButton:onPress()
+    end
 
     -- check num players
     self.numPlayers = 0
@@ -328,6 +344,10 @@ function Tutorial:enteredState()
 end
 
 function Tutorial:update(dt)
+    if control:backPressed() then
+        self.backButton:onPress()
+    end
+
     if (control:keyPressed('q') or control:keyPressed('e') or control:keyPressed('a') or control:keyPressed('d') or control:keyPressed('left') or control:keyPressed('right')) and not self.moved then
         self.moved = true
         self.timeSinceLast = 0
@@ -518,6 +538,10 @@ function Versus:enteredState()
 end
 
 function Versus:update(dt)
+    if control:backPressed() then
+        self.menuButton:onPress()
+    end
+
     -- hacky slo-mo when somebody gets hit
     -- should be mostly imperceptable, just feels good
     -- VERY FINELY TUNED, THINK HARD BEFORE FIDDLING ANY MORE
