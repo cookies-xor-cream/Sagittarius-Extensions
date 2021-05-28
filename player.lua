@@ -50,14 +50,16 @@ end
 function Player:update(dt)
     -- input
     if self.controlled then
-        local leftstick = control:analogueInput(0)
+        local movementThreshold = 0.4
+
+        local leftstick = control:analogueInput(1)
 
         -- movement on planet
         local moveRight =   (control:keyDown('right') or control:keyDown('d') or control:keyDown('e')) or
-                            leftstick.x > 0.4 and math.abs(leftstick.x) > 0.4
+                            leftstick.x >  movementThreshold
 
         local moveLeft  =   (control:keyDown('left') or control:keyDown('a') or control:keyDown('q'))  or
-                            leftstick.x < 0.4 and math.abs(leftstick.x) > 0.4
+                            leftstick.x < -movementThreshold
 
         -- movement on planet
         if moveRight and not self.aiming then
@@ -110,7 +112,7 @@ function Player:update(dt)
 
         -- arrow
         -- start aiming
-        if control:mousePressed('l') then
+        if control:mousePressed('l') or control:triggerPressed() then
             local mouseX = (love.mouse.getX() - windowOffsetX)/windowScale
             local mouseY = (love.mouse.getY() - windowOffsetY)/windowScale
             local mouseOnScreen = mouseX > 0 and mouseX < nativeWindowWidth and mouseY > 0 and mouseY < nativeWindowHeight
@@ -118,8 +120,8 @@ function Player:update(dt)
             if not self.aiming and mouseOnScreen then
                 self.aiming = true
 
-                self.aimStartX = mouseX
-                self.aimStartY = mouseY
+                self.aimStartX = 0 -- mouseX
+                self.aimStartY = 0 -- mouseY
                 self.aimEndX = self.aimStartX
                 self.aimEndY = self.aimStartY
 
@@ -138,8 +140,23 @@ function Player:update(dt)
             local mouseX = (love.mouse.getX() - windowOffsetX)/windowScale
             local mouseY = (love.mouse.getY() - windowOffsetY)/windowScale
 
-            self.aimEndX = mouseX
-            self.aimEndY = mouseY
+            local rightstick = control:analogueInput(2)
+
+            local sign = function(x) if x > 0 then return 1 else return -1 end end
+
+            local deadZone = 0.05
+            if math.abs(rightstick.x) < deadZone and math.abs(rightstick.y) < deadZone then
+                rightstick.x = 0
+                rightstick.y = 0
+            end
+
+            local controllerX = sign(rightstick.x) * math.sqrt(math.abs(rightstick.x)) * 90 + 4 * rightstick.x
+            local controllerY = sign(rightstick.y) * math.sqrt(math.abs(rightstick.y)) * 90 + 4 * rightstick.y
+            local xVec = self.aimStartX + controllerX
+            local yVec = self.aimStartY + controllerY
+
+            self.aimEndX = xVec -- mouseX
+            self.aimEndY = yVec -- mouseY
 
             local dy = self.aimStartY - self.aimEndY
             local dx = self.aimStartX - self.aimEndX
@@ -159,7 +176,7 @@ function Player:update(dt)
         end
 
         -- firing
-        if control:mouseReleased('l') then
+        if control:mouseReleased('l') or control:triggerReleased() then
             if self.aiming and self.aimPower > 0.033 then
                 game.arrows:add(Arrow:new(self.x, self.y, self.aimPower * self.fireMaxSpeed * math.cos(self.aimAngle), self.aimPower * self.fireMaxSpeed * math.sin(self.aimAngle), self.id))
                 game.turnState = 'flying'

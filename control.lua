@@ -335,9 +335,9 @@ function Control:backPressed()
 end
 
 function Control:analogueInput(id)
-    if id == 0 or id == 'left' then
+    if id == 1 or id == 'left' then
         return self.states.leftstick
-    elseif id == 1 or id == 'right' then
+    elseif id == 2 or id == 'right' then
         return self.states.rightstick
     end
 end
@@ -346,16 +346,28 @@ function Control:keypadPressed()
     return self.states.directionPressed
 end
 
+function Control:triggerDown()
+    return self.states.triggerDown
+end
+
+function Control:triggerPressed()
+    return self.states.triggerPressed
+end
+
+function Control:triggerReleased()
+    return self.states.triggerReleased
+end
+
 function Control:mouseDown(key)
-    return self.states.mouseDown[key]       or self.states.triggerDown
+    return self.states.mouseDown[key]
 end
 
 function Control:mousePressed(key)
-    return self.states.mousePressed[key]    or self.states.triggerPressed
+    return self.states.mousePressed[key]
 end
 
 function Control:mouseReleased(key)
-    return self.states.mouseReleased[key]   or self.states.triggerReleased
+    return self.states.mouseReleased[key]
 end
 
 function Control:keyDown(key)
