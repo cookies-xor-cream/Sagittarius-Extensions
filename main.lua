@@ -160,7 +160,7 @@ function love.load()
 
     colorblind = false
 
-    tutorial = true
+    tutorial = false
 
     tutShown = false
 end
