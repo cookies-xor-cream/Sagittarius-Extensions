@@ -144,14 +144,14 @@ function Player:update(dt)
 
             local sign = function(x) if x > 0 then return 1 else return -1 end end
 
-            local deadZone = 0.05
+            local deadZone = 0.08
             if math.abs(rightstick.x) < deadZone and math.abs(rightstick.y) < deadZone then
                 rightstick.x = 0
                 rightstick.y = 0
             end
 
-            local controllerX = sign(rightstick.x) * math.sqrt(math.abs(rightstick.x)) * 90 + 4 * rightstick.x
-            local controllerY = sign(rightstick.y) * math.sqrt(math.abs(rightstick.y)) * 90 + 4 * rightstick.y
+            local controllerX = sign(rightstick.x) * math.sqrt(math.abs(rightstick.x)) * 98
+            local controllerY = sign(rightstick.y) * math.sqrt(math.abs(rightstick.y)) * 98
             local xVec = self.aimStartX + controllerX
             local yVec = self.aimStartY + controllerY
 

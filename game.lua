@@ -668,6 +668,10 @@ function Versus:update(dt)
                 end
             end
             self.continueButton:update(dt)
+
+            if control:nextPressed() then
+                self.continueButton:onPress()
+            end
         end
     end
 
