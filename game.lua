@@ -378,7 +378,15 @@ function Tutorial:update(dt)
         self.skipButton:onPress()
     end
 
-    if (control:keyPressed('q') or control:keyPressed('e') or control:keyPressed('a') or control:keyPressed('d') or control:keyPressed('left') or control:keyPressed('right')) and not self.moved then
+    local leftstick = control:analogueInput(0)
+
+    local moveRight =   (control:keyDown('right') or control:keyDown('d') or control:keyDown('e')) and
+                        leftstick.x > 0.2
+
+    local moveLeft  =   (control:keyDown('left') or control:keyDown('a') or control:keyDown('q'))  and
+                        leftstick.x < 0.2
+
+    if moveRight or moveLeft then
         self.moved = true
         self.timeSinceLast = 0
     end

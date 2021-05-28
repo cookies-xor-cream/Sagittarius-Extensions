@@ -50,16 +50,24 @@ end
 function Player:update(dt)
     -- input
     if self.controlled then
-        --print(self.angle)
+        local leftstick = control:analogueInput(0)
+
         -- movement on planet
-        if (control:keyDown('right') or control:keyDown('d') or control:keyDown('e')) and not self.aiming then
+        local moveRight =   (control:keyDown('right') or control:keyDown('d') or control:keyDown('e')) or
+                            leftstick.x > 0.4 and math.abs(leftstick.x) > 0.4
+
+        local moveLeft  =   (control:keyDown('left') or control:keyDown('a') or control:keyDown('q'))  or
+                            leftstick.x < 0.4 and math.abs(leftstick.x) > 0.4
+
+        -- movement on planet
+        if moveRight and not self.aiming then
             if self.direction == 'left' then
                 self.rv = 0
             end
             self.rv = self.rv + 0.2 * self.speed / game.planets.contents[self.planet].r
             self.direction = 'right'
             self.walking = true
-        elseif (control:keyDown('left') or control:keyDown('a') or control:keyDown('q')) and not self.aiming then
+        elseif moveLeft and not self.aiming then
             if self.direction == 'right' then
                 self.rv = 0
             end

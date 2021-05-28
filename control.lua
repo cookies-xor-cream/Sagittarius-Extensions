@@ -13,6 +13,8 @@ function Control:initialize()
     self.mouseMap = {l = 1, r = 2} -- converts l and r into mouse button ids
 
     -- joystick stuff
+
+    -- trigger stuff
     self.joysticks = love.joystick.getJoysticks()
 
     self.states.triggerDown     = false
@@ -39,6 +41,10 @@ function Control:initialize()
     self.states.directionDown      = {up = false, down = false, left = false, right = false}
     self.states.directionPressed   = {up = false, down = false, left = false, right = false}
     self.states.directionReleased  = {up = false, down = false, left = false, right = false}
+
+    -- joystick analogue movement
+    self.states.leftstick   = {x = 0, y = 0}
+    self.states.rightstick  = {x = 0, y = 0}
 
     self.states.keyDown = {
                     a = false, 
@@ -268,6 +274,13 @@ function Control:update(dt)
             self.states.directionReleased[key]  = (not isDown and self.states.directionDown[key])
             self.states.directionDown[key]      = isDown
         end
+
+        -- check analogue sticks
+        self.states.leftstick['x']  = joystick:getGamepadAxis('leftx')
+        self.states.leftstick['y']  = joystick:getGamepadAxis('lefty')
+
+        self.states.rightstick['x'] = joystick:getGamepadAxis('rightx')
+        self.states.rightstick['y'] = joystick:getGamepadAxis('righty')
     end
 
     -- current state
@@ -319,6 +332,14 @@ end
 
 function Control:backPressed()
     return self.states.backPressed
+end
+
+function Control:analogueInput(id)
+    if id == 0 or id == 'left' then
+        return self.states.leftstick
+    elseif id == 1 or id == 'right' then
+        return self.states.rightstick
+    end
 end
 
 function Control:keypadPressed()
