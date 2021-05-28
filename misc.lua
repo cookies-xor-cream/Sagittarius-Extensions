@@ -119,22 +119,27 @@ local r, g, b, a = love.graphics.getColor()
    print(r,g,b,a)
    -- r,g,b,a = 0.5,0.5,0.5,1
 
-   love.graphics.stencil(mystencil, 'replace', 1)
+   love.graphics.stencil(mystencil, 'replace', 1, false)
+   corner = 1
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+rd, y+rd, rd, s)
 
+   love.graphics.stencil(mystencil, 'replace', 1, false)
    corner = 2
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+w-rd, y+rd, rd, s)
-
+   
+   love.graphics.stencil(mystencil, 'replace', 1, false)
    corner = 3
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+rd, y+h-rd, rd, s)
 
+   love.graphics.stencil(mystencil, 'replace', 1, false)
    corner = 4
    love.graphics.setColor(r, g, b, a)
    love.graphics.circle(mode, x+w-rd, y+h-rd, rd, s)
 
+   love.graphics.stencil(mystencil, 'replace', 1, false)
    corner = 0
    love.graphics.setColor(r, g, b, a)
    love.graphics.rectangle(mode, x, y, w, h)

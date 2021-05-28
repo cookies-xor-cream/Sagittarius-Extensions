@@ -46,6 +46,7 @@ function Menu:update(dt)
 end
 
 function Menu:draw()
+    love.graphics.clear()   -- cleared canvas before each draw
     love.graphics.setBackgroundColor(blackColor.r, blackColor.g, blackColor.b)
     love.graphics.setColor(white2Color.r, white2Color.g, white2Color.b)
 
