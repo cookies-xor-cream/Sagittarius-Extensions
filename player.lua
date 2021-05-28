@@ -120,8 +120,8 @@ function Player:update(dt)
             if not self.aiming and mouseOnScreen then
                 self.aiming = true
 
-                self.aimStartX = 0 -- mouseX
-                self.aimStartY = 0 -- mouseY
+                self.aimStartX = mouseX
+                self.aimStartY = mouseY
                 self.aimEndX = self.aimStartX
                 self.aimEndY = self.aimStartY
 
@@ -137,23 +137,23 @@ function Player:update(dt)
         -- continue aiming
         if self.aiming then
            -- print(self.aimAngle)
-            local mouseX = (love.mouse.getX() - windowOffsetX)/windowScale
-            local mouseY = (love.mouse.getY() - windowOffsetY)/windowScale
-
             local rightstick = control:analogueInput(2)
 
             local sign = function(x) if x > 0 then return 1 else return -1 end end
 
+            local xVec = 0
+            local yVec = 0
+
             local deadZone = 0.08
             if math.abs(rightstick.x) < deadZone and math.abs(rightstick.y) < deadZone then
-                rightstick.x = 0
-                rightstick.y = 0
+                xVec = (love.mouse.getX() - windowOffsetX)/windowScale
+                yVec = (love.mouse.getY() - windowOffsetY)/windowScale
+            else
+                local controllerX = sign(rightstick.x) * math.sqrt(math.abs(rightstick.x)) * 98
+                local controllerY = sign(rightstick.y) * math.sqrt(math.abs(rightstick.y)) * 98
+                xVec = self.aimStartX + controllerX
+                yVec = self.aimStartY + controllerY
             end
-
-            local controllerX = sign(rightstick.x) * math.sqrt(math.abs(rightstick.x)) * 98
-            local controllerY = sign(rightstick.y) * math.sqrt(math.abs(rightstick.y)) * 98
-            local xVec = self.aimStartX + controllerX
-            local yVec = self.aimStartY + controllerY
 
             self.aimEndX = xVec -- mouseX
             self.aimEndY = yVec -- mouseY

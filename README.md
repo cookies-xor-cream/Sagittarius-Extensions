@@ -35,6 +35,12 @@ However if you still want to build and run this (for whatever reason: maybe you 
 
 
 
+## New Additions
+
+-   Controller Support
+    -   Menu selection and navigation all done via controllers
+    -   Aiming and shooting can be done via controllers
+
 ## TODO
 
 -   Controller/Joystick Support
