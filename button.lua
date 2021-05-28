@@ -21,12 +21,12 @@ function Button:initialize(x, y, w, h, text, onPress, id)
 	self.colorid = 1 -- oops
 end
 
-function Button:update(dt)
+function Button:update(dt, selected)
 	-- determine whether mouse is over button, and if it is being clicked
 	local mouseY = (love.mouse.getY() - windowOffsetY) / windowScale
 	local mouseX = (love.mouse.getX() - windowOffsetX) / windowScale
 
-	self.mouseOver = mouseX > self.x and mouseX < self.x + self.w and mouseY > self.y and mouseY < self.y + self.h
+	self.mouseOver = selected or (mouseX > self.x and mouseX < self.x + self.w and mouseY > self.y and mouseY < self.y + self.h)
 
 	if self.mouseOver then
 		self.alpha = self.alpha + 1 * 9 * dt

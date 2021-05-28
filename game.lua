@@ -43,10 +43,9 @@ function Menu:enteredState()
 end
 
 function Menu:update(dt)
-    self.playButton:update(dt)
-    self.quitButton:update(dt)
-    self.optionsButton:update(dt)
-    self.creditsButton:update(dt)
+    for i, btn in pairs(self.menuButtons) do
+        btn:update(dt, self.selectedButton == i)
+    end
 
     gamepadDirection = control:keypadPressed()
 
@@ -92,10 +91,12 @@ function Menu:draw()
     love.graphics.setBackgroundColor(blackColor.r, blackColor.g, blackColor.b)
     love.graphics.setColor(white2Color.r, white2Color.g, white2Color.b)
 
-    self.playButton:draw()
-    self.quitButton:draw()
-    self.optionsButton:draw()
-    self.creditsButton:draw()
+    for i, btn in pairs(self.menuButtons) do
+        -- selected = self.selectedButton == i
+        btn:draw()
+    end
+
+    -- print("\n")
 
     setColor(self.titleColorId, 2)
     love.graphics.draw(titleImg, nativeWindowWidth/2 - 198, 83)
