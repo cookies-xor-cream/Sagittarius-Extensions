@@ -48,7 +48,7 @@ end
 function Menu:draw()
     love.graphics.clear()   -- cleared canvas before each draw
     love.graphics.setCanvas{canvas, stencil=true}
-    
+
     love.graphics.setBackgroundColor(blackColor.r, blackColor.g, blackColor.b)
     love.graphics.setColor(white2Color.r, white2Color.g, white2Color.b)
 
@@ -86,6 +86,9 @@ function Credits:update(dt)
 end
 
 function Credits:draw()
+    love.graphics.clear()   -- cleared canvas before each draw
+    love.graphics.setCanvas{canvas, stencil=true}
+
     love.graphics.setBackgroundColor(blackColor.r, blackColor.g, blackColor.b)
 
     love.graphics.setLineWidth(2)
@@ -137,6 +140,9 @@ function Options:update(dt)
 end
 
 function Options:draw()
+    love.graphics.clear()   -- cleared canvas before each draw
+    love.graphics.setCanvas{canvas, stencil=true}
+
     love.graphics.setBackgroundColor(blackColor.r, blackColor.g, blackColor.b)
 
     self.menuButton:draw()
@@ -216,6 +222,9 @@ function Setup:update(dt)
 end
 
 function Setup:draw()
+    love.graphics.clear()   -- cleared canvas before each draw
+    love.graphics.setCanvas{canvas, stencil=true}
+
     love.graphics.setBackgroundColor(blackColor.r, blackColor.g, blackColor.b)
     love.graphics.setColor(white2Color.r, white2Color.g, white2Color.b)
     love.graphics.setFont(mediumFont)
@@ -351,6 +360,9 @@ function Tutorial:update(dt)
 end
 
 function Tutorial:draw()
+    love.graphics.clear()   -- cleared canvas before each draw
+    love.graphics.setCanvas{canvas, stencil=true}
+
     -- background
     love.graphics.setColor(blackColor.r, blackColor.r, blackColor.b)
     love.graphics.rectangle('fill', 0, 0, nativeWindowWidth, nativeWindowHeight)
@@ -540,6 +552,9 @@ function Versus:update(dt)
 end
 
 function Versus:draw()
+    love.graphics.clear()   -- cleared canvas before each draw
+    love.graphics.setCanvas{canvas, stencil=true}
+    
     -- background
     love.graphics.setColor(blackColor.r, blackColor.r, blackColor.b)
     love.graphics.rectangle('fill', 0, 0, nativeWindowWidth, nativeWindowHeight)
