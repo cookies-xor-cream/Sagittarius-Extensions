@@ -90,7 +90,7 @@ function love.load()
     love.audio.setVolume(0.8)
 
     -- load music
-    track1 = love.audio.newSource('music/artblock.ogg', 'static')
+    track1 = love.audio.newSource('music/artblock.ogg', 'stream')
     track1:setLooping(true)
     track1:setVolume(0.3)
     track1:play()
