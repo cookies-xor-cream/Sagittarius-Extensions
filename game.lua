@@ -254,12 +254,36 @@ function Setup:update(dt)
     if control:nextPressed() then
         self.playButton:onPress()
     end
-
+    
     -- check num players
     self.numPlayers = 0
     for i=1, #self.isPlaying do
         if self.isPlaying[i] then
             self.numPlayers = self.numPlayers + 1
+        end
+    end
+
+    gamepadDirection = control:keypadPressed()
+
+    -- add a player when you press right
+    -- adds players from the left hand side
+    if gamepadDirection['right'] and self.numPlayers <= 5 then
+        for i, playing in pairs(self.isPlaying) do
+            if not playing then
+                self.isPlaying[i] = true
+                break
+            end
+        end
+    end
+
+    -- remove a player when you press left
+    -- removes players from the right hand side
+    if gamepadDirection['left'] and self.numPlayers > 2 then
+        for i=5,1,-1 do
+            if self.isPlaying[i] then
+                self.isPlaying[i] = false
+                break
+            end
         end
     end
 
