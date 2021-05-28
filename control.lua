@@ -21,6 +21,12 @@ function Control:initialize()
 
     self.triggerIdsMap  = {rt = 8, lt = 7, x = 4, a = 1}
 
+    self.states.nextDown        = false 
+    self.states.nextPressed     = false
+    self.states.nextReleased    = false
+
+    self.nextId                 = 10
+
     self.states.backDown        = false 
     self.states.backPressed     = false
     self.states.backReleased    = false
@@ -225,13 +231,6 @@ function Control:activeInput()
 end
 
 function Control:update(dt)
-    -- for key, joystick in pairs(self.joysticks) do
-    --     for i = 1, joystick:getButtonCount() do
-    --         print(joystick:isDown(i))
-    --     end
-    -- end
-
-    -- print("\n\n")
 
     -- update joystick variables
     for key, joystick in pairs(self.joysticks) do
@@ -247,6 +246,13 @@ function Control:update(dt)
         self.states.triggerReleased = (not isDown and self.states.triggerDown)
         self.states.triggerDown     = isDown
 
+        -- check next buttons
+        isDown = joystick:isDown(self.nextId)
+
+        self.states.nextPressed     = (not self.states.nextDown and isDown)
+        self.states.nextReleased    = (not isDown and self.states.nextDown)
+        self.states.nextDown        = isDown
+
         -- check back buttons
         isDown = joystick:isDown(self.backId)
 
@@ -257,7 +263,6 @@ function Control:update(dt)
         -- check gamepad
         for key, id in pairs(self.gamepadIdsMap) do
             isDown = joystick:isDown(id)
-            -- print(isDown)
 
             self.states.directionPressed[key]   = (not self.states.directionDown[key] and isDown)
             self.states.directionReleased[key]  = (not isDown and self.states.directionDown[key])
@@ -308,8 +313,11 @@ function Control:triggerPressed()
     return self.states.triggerPressed
 end
 
+function Control:nextPressed()
+    return self.states.nextPressed
+end
+
 function Control:backPressed()
-    -- print(self.states.backDown, self.states.backPressed, self.states.backReleased)
     return self.states.backPressed
 end
 

@@ -49,9 +49,6 @@ function Menu:update(dt)
     self.creditsButton:update(dt)
 
     gamepadDirection = control:keypadPressed()
-    for k, v in pairs(gamepadDirection) do
-        -- print(k, v)
-    end
 
     if gamepadDirection['up'] then
         self.selectedButton = self.selectedButton - 1
@@ -253,6 +250,10 @@ function Setup:update(dt)
         self.menuButton:onPress()
     end
 
+    if control:nextPressed() then
+        self.playButton:onPress()
+    end
+
     -- check num players
     self.numPlayers = 0
     for i=1, #self.isPlaying do
@@ -346,6 +347,10 @@ end
 function Tutorial:update(dt)
     if control:backPressed() then
         self.backButton:onPress()
+    end
+
+    if control:nextPressed() then
+        self.skipButton:onPress()
     end
 
     if (control:keyPressed('q') or control:keyPressed('e') or control:keyPressed('a') or control:keyPressed('d') or control:keyPressed('left') or control:keyPressed('right')) and not self.moved then
