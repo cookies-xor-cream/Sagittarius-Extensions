@@ -32,6 +32,14 @@ function Menu:enteredState()
     self.creditsButton = Button:new(240, 280, 80, 35, 'credits', function() game:gotoState('Credits') end, 8)
     self.quitButton = Button:new(258, 315, 44, 35, 'quit', function() love.event.quit() end, 2)
     self.titleColorId = 1
+
+    self.selectedButton = 1
+    self.buttons = {
+        self.playButton,
+        self.optionsButton,
+        self.creditsButton,
+        self.quitButton
+    }
 end
 
 function Menu:update(dt)
@@ -40,8 +48,16 @@ function Menu:update(dt)
     self.optionsButton:update(dt)
     self.creditsButton:update(dt)
 
+    if control:keyPressed('escape') and not love.window.getFullscreen() then
+        love.event.quit()
+    end
+
     if control:keyPressed('escape') and love.window.getFullscreen() then
         love.window.setMode(1120, 840, {fullscreen=false, resizable=true, minwidth=560, minheight=420})
+    end
+
+    if control:keyPressed('space') and not love.window.getFullscreen() then
+        love.window.setMode(0, 0, {fullscreen=true, resizable=false})
     end
 end
 

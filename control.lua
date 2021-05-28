@@ -12,6 +12,15 @@ function Control:initialize()
 
     self.mouseMap = {l = 1, r = 2} -- converts l and r into mouse button ids
 
+    self.joysticks = love.joystick.getJoysticks()
+
+    self.states.triggerDown     = false
+    self.states.triggerPressed  = false
+    self.states.triggerReleased = false
+
+
+    self.triggerIdsMap = {rt = 8, lt = 7, x = 4, a = 1}
+
     self.states.keyDown = {
                     a = false, 
                     b = false,
@@ -197,7 +206,24 @@ function Control:initialize()
                     }
 end
 
+function Control:activeInput()
+    print(2)
+    return true
+end
+
 function Control:update(dt)
+    for key, joystick in pairs(self.joysticks) do
+        isDown = false
+
+        for key, id in pairs(self.triggerIdsMap) do
+            isDown = isDown or joystick:isDown(id)
+        end
+
+        self.states.triggerPressed  = (not self.states.triggerDown and isDown)
+        self.states.triggerReleased = (not isDown and self.states.triggerDown)
+        self.states.triggerDown     = isDown
+    end
+
     -- current state
     for key, value in pairs(self.states.mouseDown) do
         self.states.mouseDown[key] = love.mouse.isDown(self.mouseMap[key])
@@ -238,15 +264,15 @@ function Control:update(dt)
 end
 
 function Control:mouseDown(key)
-    return self.states.mouseDown[key]
+    return self.states.mouseDown[key]       or self.states.triggerDown
 end
 
 function Control:mousePressed(key)
-    return self.states.mousePressed[key]
+    return self.states.mousePressed[key]    or self.states.triggerPressed
 end
 
 function Control:mouseReleased(key)
-    return self.states.mouseReleased[key]
+    return self.states.mouseReleased[key]   or self.states.triggerReleased
 end
 
 function Control:keyDown(key)
