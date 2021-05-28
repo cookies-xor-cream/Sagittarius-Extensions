@@ -151,8 +151,9 @@ function Credits:draw()
 
 
     self.menuButton:draw()
-    self.georgeButton:draw()
-    self.janButton:draw()
+    for i, btn in pairs(self.menuButtons) do
+        btn:draw()
+    end
 end
 
 function Credits:exitedState()
@@ -168,15 +169,39 @@ function Options:enteredState()
     self.tutorialToggle = Toggle:new(380, 240, tutorial, function() tutorial = not tutorial; tutShown = false; self.moved = false; self.aimed = false; self.fired = false; self.cancelled = false; self.winned = false; end, math.random(5, 9))
     self.volumeToggle = Toggle:new(380, 160, sounds, function() sounds = not sounds end, math.random(5, 9))
     self.musicToggle = Toggle:new(380, 200, track1:isPlaying(), function() if track1:isPlaying() then track1:stop() else track1:play() end end, math.random(5, 9))
+
+    self.selectedButton = 1
+    
+    self.menuButtons = {
+        self.fullscreenToggle,
+        self.volumeToggle,
+        self.musicToggle,
+        self.tutorialToggle,
+        self.colorblindToggle
+    }
 end
 
 function Options:update(dt)
-    self.menuButton:update(dt)
-    self.fullscreenToggle:update(dt)
-    self.colorblindToggle:update(dt)
-    self.tutorialToggle:update(dt)
-    self.volumeToggle:update(dt)
-    self.musicToggle:update(dt)
+    -- self.menuButton:update(dt, false)
+
+    -- print(self.selectedButton)
+
+    for i, btn in pairs(self.menuButtons) do
+        btn:update(dt, self.selectedButton == i)
+    end
+
+    gamepadDirection = control:keypadPressed()
+
+    if gamepadDirection['up'] then
+        self.selectedButton = self.selectedButton - 1
+    end
+
+    if gamepadDirection['down'] then
+        self.selectedButton = self.selectedButton + 1
+    end
+
+    -- modular arithmetic sucks in 1-indexed languages: implements wraparound for menu
+    self.selectedButton = (self.selectedButton + #self.menuButtons - 1) % #self.menuButtons + 1
 
     if control:backPressed() then
         self.menuButton:onPress()
@@ -391,12 +416,12 @@ function Tutorial:update(dt)
         self.timeSinceLast = 0
     end
 
-    if (control:mousePressed('l') and self.moved) and not self.aimed then
+    if ((control:mousePressed('l') or control:triggerPressed()) and self.moved) and not self.aimed then
         self.aimed = true
         self.timeSinceLast = 0
     end
 
-    if (control:mouseReleased('l') and self.aimed) and not self.fired then
+    if ((control:mouseReleased('l') or control:triggerReleased()) and self.aimed) and not self.fired then
         self.fired = true
         self.timeSinceLast = 0
     end

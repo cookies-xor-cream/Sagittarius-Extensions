@@ -27,13 +27,13 @@ function Toggle:initialize(x, y, on, onPress, id)
 	self.colorid = 1
 end
 
-function Toggle:update(dt)
+function Toggle:update(dt, selected)
 	local mouseY = (love.mouse.getY() - windowOffsetY) / windowScale
 	local mouseX = (love.mouse.getX() - windowOffsetX) / windowScale
 
-	self.mouseOver = mouseX > self.x and mouseX < self.x + self.w and mouseY > self.y and mouseY < self.y + self.h
+	self.mouseOver = selected or (mouseX > self.x and mouseX < self.x + self.w and mouseY > self.y and mouseY < self.y + self.h)
 
-	if self.mouseOver and control:mousePressed('l') then
+	if self.mouseOver and (control:mousePressed('l') or control:triggerPressed()) then
 		if self.on then
 			self.on = false
 			self.text = 'OFF'
