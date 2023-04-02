@@ -43,6 +43,5 @@ However if you still want to build and run this (for whatever reason: maybe you 
 
 ## TODO
 
--   Controller/Joystick Support
--   Sockets?
+-   Networking?
 
